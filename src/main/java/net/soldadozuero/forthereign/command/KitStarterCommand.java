@@ -3,6 +3,7 @@ package net.soldadozuero.forthereign.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
@@ -15,7 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import java.util.Map;
 
 public class KitStarterCommand {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
         dispatcher.register(CommandManager.literal("kit")
                 .then(CommandManager.literal("starter").executes(KitStarterCommand::run)));
     }
@@ -42,4 +43,5 @@ public class KitStarterCommand {
 
         return 1;
     }
+
 }
