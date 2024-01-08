@@ -4,6 +4,7 @@
   "package": "net.soldadozuero.forthereign.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ModEntityDataSaver"
   ],
   "client": [
     "ExampleMixin"
