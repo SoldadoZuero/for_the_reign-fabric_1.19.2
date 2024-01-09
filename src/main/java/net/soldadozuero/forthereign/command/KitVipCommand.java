@@ -3,15 +3,9 @@ package net.soldadozuero.forthereign.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.fabricmc.fabric.api.item.v1.FabricItem;
-import net.fabricmc.fabric.api.item.v1.FabricItemStack;
-import net.fabricmc.fabric.impl.item.FabricItemInternals;
-import net.fabricmc.fabric.impl.registry.sync.FabricRegistry;
-import net.fabricmc.fabric.impl.registry.sync.FabricRegistryInit;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.command.CommandManager;
@@ -20,7 +14,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
 
 import java.util.Map;
 
