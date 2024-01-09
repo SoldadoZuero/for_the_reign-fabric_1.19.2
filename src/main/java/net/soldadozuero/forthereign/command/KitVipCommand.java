@@ -25,7 +25,11 @@ import net.minecraft.util.registry.RegistryEntry;
 import java.util.Map;
 
 public class KitVipCommand {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
+    public static void register(
+            CommandDispatcher<ServerCommandSource> dispatcher,
+            CommandRegistryAccess commandRegistryAccess,
+            CommandManager.RegistrationEnvironment registrationEnvironment
+    ) {
         dispatcher.register(CommandManager.literal("kit")
                 .then(CommandManager.literal("vip").executes(KitVipCommand::run)));
     }

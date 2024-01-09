@@ -16,7 +16,11 @@ import net.minecraft.sound.SoundEvents;
 import java.util.Map;
 
 public class KitStarterCommand {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
+   public static void register(
+            CommandDispatcher<ServerCommandSource> dispatcher,
+            CommandRegistryAccess commandRegistryAccess,
+            CommandManager.RegistrationEnvironment registrationEnvironment
+    ) {
         dispatcher.register(CommandManager.literal("kit")
                 .then(CommandManager.literal("starter").executes(KitStarterCommand::run)));
     }
