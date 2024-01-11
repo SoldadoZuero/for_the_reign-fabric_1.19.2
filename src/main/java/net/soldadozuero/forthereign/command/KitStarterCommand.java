@@ -8,10 +8,13 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
+import net.soldadozuero.forthereign.util.IEntityDataSaver;
 
 import java.util.Map;
 
@@ -27,9 +30,16 @@ public class KitStarterCommand {
 
     private static int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         var player = context.getSource().getPlayer();
+        IEntityDataSaver playerNbt = (IEntityDataSaver) context.getSource().getPlayer();
         ItemStack douradinha = new ItemStack(Items.GOLDEN_SHOVEL);
-
         assert player != null;
+        assert playerNbt != null;
+
+        if (playerNbt.getPersistentData().getBoolean("receivedStarterKit")) {
+            context.getSource().sendFeedback(Text.literal("Você já resgatou o kit iniciante"), true);
+            return 0;
+        }
+
         player.world.playSound((player), player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((((
                                 player.getRandom().nextFloat() - player.getRandom().nextFloat()
@@ -45,6 +55,7 @@ public class KitStarterCommand {
                         Enchantments.EFFICIENCY, 3, Enchantments.UNBREAKING, 5, Enchantments.MENDING, 1
                 ),douradinha);
         player.getInventory().insertStack(douradinha);
+        playerNbt.getPersistentData().putBoolean("receivedStarterKit", true);
 
         return 1;
     }
