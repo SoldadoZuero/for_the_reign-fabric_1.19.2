@@ -55,6 +55,7 @@ public class KitStarterCommand {
                         Enchantments.EFFICIENCY, 3, Enchantments.UNBREAKING, 5, Enchantments.MENDING, 1
                 ),douradinha);
         player.getInventory().insertStack(douradinha);
+        player.sendMessageToClient(Text.literal("&n &a Kit resgatado"), true);
         playerNbt.getPersistentData().putBoolean("receivedStarterKit", true);
 
         return 1;

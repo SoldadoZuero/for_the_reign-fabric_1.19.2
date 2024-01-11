@@ -63,6 +63,7 @@ public class KitVipPlusCommand {
                         Enchantments.EFFICIENCY, 3, Enchantments.MENDING, 1
                 ),douradinha);
         player.getInventory().insertStack(douradinha);
+        player.sendMessageToClient(Text.literal("&n &a Kit resgatado"), true);
         playerNbt.getPersistentData().putLong("lastVipPlusKitTime", currentTime);
 
         return 1;
