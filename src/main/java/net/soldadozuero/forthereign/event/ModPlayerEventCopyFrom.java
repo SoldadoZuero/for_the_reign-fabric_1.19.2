@@ -11,5 +11,7 @@ public class ModPlayerEventCopyFrom implements ServerPlayerEvents.CopyFrom {
         IEntityDataSaver player = ((IEntityDataSaver) newPlayer);
 
         player.getPersistentData().putBoolean("receivedStarterKit", original.getPersistentData().getBoolean("receivedStarterKit"));
+        player.getPersistentData().putLong("lastVipKitTime", original.getPersistentData().getLong("lastVipKitTime"));
+        player.getPersistentData().putLong("lastVipPlusKitTime", original.getPersistentData().getLong("lastVipPlusKitTime"));
     }
 }

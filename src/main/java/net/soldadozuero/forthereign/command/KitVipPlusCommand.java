@@ -12,12 +12,17 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.soldadozuero.forthereign.util.IEntityDataSaver;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class KitVipPlusCommand {
+    private static final long COOLDOWN_TIME = 30 * 24 * 60 * 60L;
+
     public static void register(
             CommandDispatcher<ServerCommandSource> dispatcher,
             CommandRegistryAccess commandRegistryAccess,
@@ -28,10 +33,21 @@ public class KitVipPlusCommand {
     }
 
     private static int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        var player = context.getSource().getPlayer();
         ItemStack douradinha = new ItemStack(Items.NETHERITE_SHOVEL);
 
+        IEntityDataSaver playerNbt = (IEntityDataSaver) context.getSource().getPlayer();
+        var player = context.getSource().getPlayer();
         assert player != null;
+        assert playerNbt != null;
+        long currentTime = System.currentTimeMillis() / 1000L;
+        long lastUsedTime = playerNbt.getPersistentData().getLong("lastVipPlusKitTime");
+
+        if (currentTime - lastUsedTime < COOLDOWN_TIME) {
+            long remainingTime = COOLDOWN_TIME - (currentTime - lastUsedTime);
+            context.getSource().sendFeedback(Text.literal("Você precisa esperar mais " + formatTime(remainingTime) + " para usar este comando novamente."), false);
+            return 0;
+        }
+
         player.world.playSound((player), player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((((
                                 player.getRandom().nextFloat() - player.getRandom().nextFloat()
@@ -47,8 +63,16 @@ public class KitVipPlusCommand {
                         Enchantments.EFFICIENCY, 3, Enchantments.MENDING, 1
                 ),douradinha);
         player.getInventory().insertStack(douradinha);
+        playerNbt.getPersistentData().putLong("lastVipPlusKitTime", currentTime);
 
         return 1;
     }
 
+    private static String formatTime(long seconds) {
+        long days = TimeUnit.SECONDS.toDays(seconds);
+        long hours = TimeUnit.SECONDS.toHours(seconds) % 24;
+        long minutes = TimeUnit.SECONDS.toMinutes(seconds) % 60;
+        long secs = seconds % 60;
+        return String.format("%02dd %02d:%02d:%02d", days, hours, minutes, secs);
+    }
 }
