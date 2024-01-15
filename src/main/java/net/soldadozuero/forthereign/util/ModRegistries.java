@@ -17,6 +17,8 @@ public class ModRegistries {
         CommandRegistrationCallback.EVENT.register(TpLobbyCommand::register);
         CommandRegistrationCallback.EVENT.register(TpReignCommand::register);
         CommandRegistrationCallback.EVENT.register(TpShogunCommand::register);
+        CommandRegistrationCallback.EVENT.register(PlayerRegisterCommand::register);
+        CommandRegistrationCallback.EVENT.register(PlayerLoginCommand::register);
     }
 
     private static void registerEvents() {
